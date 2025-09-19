@@ -1,0 +1,8 @@
+src/*
+test/*
+.eslintrc.json
+.gitignore
+.github/*
+Dockerfile
+docker-compose.yaml
+images/*

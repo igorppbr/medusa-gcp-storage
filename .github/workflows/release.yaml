@@ -1,0 +1,23 @@
+name: Release new package version
+
+on:
+  release:
+    types: [ created ]
+
+jobs:
+  npm_package:
+    name: Publish NPM package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+          scope: '@igorppbr'
+      - run: npm install
+      - run: npm run build
+      - uses: JS-DevTools/npm-publish@v3
+        with:
+          token: ${{ secrets.NODE_AUTH_TOKEN }}
+          access: public

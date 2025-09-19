@@ -1,0 +1,97 @@
+{
+  "name": "@igorppbr/medusa-v2-gcp-file-provider",
+  "version": "1.0.0",
+  "description": "Google Cloud Storage integration for Medusa V2 to be used as a file provider.",
+  "author": "Igor Ludgero Miura <igorlmiura@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/igorppbr/medusa-gcp-storage#readme",
+  "bugs": {
+    "url": "https://github.com/igorppbr/medusa-gcp-storage/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/igorppbr/medusa-gcp-storage.git"
+  },
+  "files": [
+    ".medusa/server"
+  ],
+  "main": ".medusa/server/src/index.js",
+  "exports": {
+    ".": {
+      "import": "./.medusa/server/src/index.js",
+      "require": "./.medusa/server/src/index.js"
+    },
+    "./package.json": "./package.json",
+    "./workflows": "./.medusa/server/src/workflows/index.js",
+    "./.medusa/server/src/modules/*": "./.medusa/server/src/modules/*/index.js",
+    "./modules/*": "./.medusa/server/src/modules/*/index.js",
+    "./providers/*": "./.medusa/server/src/providers/*/index.js",
+    "./*": "./.medusa/server/src/*.js"
+  },
+  "keywords": [
+    "medusa",
+    "plugin",
+    "medusa-plugin-other",
+    "medusa-plugin",
+    "medusa-v2",
+    "medusa-plugin-integration",
+    "gcp",
+    "google-cloud",
+    "google",
+    "storage"
+  ],
+  "scripts": {
+    "build": "medusa plugin:build",
+    "dev": "medusa plugin:develop",
+    "prepublishOnly": "medusa plugin:build"
+  },
+  "devDependencies": {
+    "@medusajs/admin-sdk": "2.4.0",
+    "@medusajs/cli": "2.4.0",
+    "@medusajs/framework": "2.4.0",
+    "@medusajs/medusa": "2.4.0",
+    "@medusajs/test-utils": "2.4.0",
+    "@medusajs/ui": "4.0.4",
+    "@medusajs/icons": "2.4.0",
+    "@mikro-orm/cli": "6.4.3",
+    "@mikro-orm/core": "6.4.3",
+    "@mikro-orm/knex": "6.4.3",
+    "@mikro-orm/migrations": "6.4.3",
+    "@mikro-orm/postgresql": "6.4.3",
+    "@swc/core": "1.5.7",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.3.2",
+    "@types/react-dom": "^18.2.25",
+    "awilix": "^8.0.1",
+    "pg": "^8.13.0",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2",
+    "vite": "^5.2.11",
+    "yalc": "^1.0.0-pre.53"
+  },
+  "peerDependencies": {
+    "@medusajs/admin-sdk": "2.4.0",
+    "@medusajs/cli": "2.4.0",
+    "@medusajs/framework": "2.4.0",
+    "@medusajs/test-utils": "2.4.0",
+    "@medusajs/medusa": "2.4.0",
+    "@medusajs/ui": "4.0.3",
+    "@medusajs/icons": "2.4.0",
+    "@mikro-orm/cli": "6.4.3",
+    "@mikro-orm/core": "6.4.3",
+    "@mikro-orm/knex": "6.4.3",
+    "@mikro-orm/migrations": "6.4.3",
+    "@mikro-orm/postgresql": "6.4.3",
+    "awilix": "^8.0.1",
+    "pg": "^8.13.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@google-cloud/storage": "^7.17.0"
+  }
+}
