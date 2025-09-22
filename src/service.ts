@@ -59,7 +59,7 @@ class GoogleCloudFileProviderService extends AbstractFileProviderService {
    * Validates the options for the Google Cloud Storage provider
    * @param options - The options to validate
    */
-  static validateOptions(options: Record<any, any>) {
+  static validateOptions(options: Record<string, unknown>) {
     if (!options.bucketName) {
       throw new MedusaError(
         MedusaError.Types.INVALID_DATA,

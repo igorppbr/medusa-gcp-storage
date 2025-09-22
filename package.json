@@ -1,6 +1,6 @@
 {
   "name": "@igorppbr/medusa-v2-gcp-file-provider",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Google Cloud Storage integration for Medusa V2 to be used as a file provider.",
   "author": "Igor Ludgero Miura <igorlmiura@gmail.com>",
   "license": "MIT",
@@ -43,16 +43,19 @@
   "scripts": {
     "build": "medusa plugin:build",
     "dev": "medusa plugin:develop",
-    "prepublishOnly": "medusa plugin:build"
+    "prepublishOnly": "medusa plugin:build",
+    "lint": "npx eslint src",
+    "lint:fix": "npx eslint src --fix"
   },
   "devDependencies": {
+    "@eslint/js": "^9.36.0",
     "@medusajs/admin-sdk": "2.4.0",
     "@medusajs/cli": "2.4.0",
     "@medusajs/framework": "2.4.0",
+    "@medusajs/icons": "2.4.0",
     "@medusajs/medusa": "2.4.0",
     "@medusajs/test-utils": "2.4.0",
     "@medusajs/ui": "4.0.4",
-    "@medusajs/icons": "2.4.0",
     "@mikro-orm/cli": "6.4.3",
     "@mikro-orm/core": "6.4.3",
     "@mikro-orm/knex": "6.4.3",
@@ -63,12 +66,14 @@
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.2.25",
     "awilix": "^8.0.1",
+    "eslint": "^9.36.0",
     "pg": "^8.13.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.2",
+    "typescript-eslint": "^8.44.1",
     "vite": "^5.2.11",
     "yalc": "^1.0.0-pre.53"
   },
@@ -76,10 +81,10 @@
     "@medusajs/admin-sdk": "2.4.0",
     "@medusajs/cli": "2.4.0",
     "@medusajs/framework": "2.4.0",
-    "@medusajs/test-utils": "2.4.0",
-    "@medusajs/medusa": "2.4.0",
-    "@medusajs/ui": "4.0.3",
     "@medusajs/icons": "2.4.0",
+    "@medusajs/medusa": "2.4.0",
+    "@medusajs/test-utils": "2.4.0",
+    "@medusajs/ui": "4.0.3",
     "@mikro-orm/cli": "6.4.3",
     "@mikro-orm/core": "6.4.3",
     "@mikro-orm/knex": "6.4.3",
@@ -93,5 +98,6 @@
   },
   "dependencies": {
     "@google-cloud/storage": "^7.17.0"
-  }
+  },
+  "packageManager": "yarn@4.4.0+sha512.91d93b445d9284e7ed52931369bc89a663414e5582d00eea45c67ddc459a2582919eece27c412d6ffd1bd0793ff35399381cb229326b961798ce4f4cc60ddfdb"
 }
