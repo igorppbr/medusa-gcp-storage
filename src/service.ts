@@ -217,7 +217,7 @@ class GoogleCloudFileProviderService extends AbstractFileProviderService {
       }
 
       // 1. Save the file
-      const content = Buffer.from(file.content, "binary");
+      const content = Buffer.from(file.content, "base64");
 
       // Create temporary local file from the buffer
       const tempFilePath = `/tmp/${file.filename}`;
