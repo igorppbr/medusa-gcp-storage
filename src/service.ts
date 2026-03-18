@@ -3,6 +3,7 @@ import { FileTypes, Logger, ProviderDeleteFileDTO, ProviderFileResultDTO, Provid
 import { Readable } from "stream"
 import { Storage } from "@google-cloud/storage"
 import fs from "fs"
+import { randomUUID } from "crypto"
 
 type InjectedDependencies = {
   logger: Logger
@@ -26,6 +27,7 @@ type Options = {
     serviceAccountKey: GoogleCloudServiceAccountKey
     preSignedUrlExpiry?: number // In minutes
     debug?: boolean
+    randomizeFileName?: boolean // Randomize file names on upload to avoid conflicts
 }
 
 /**
@@ -209,11 +211,23 @@ class GoogleCloudFileProviderService extends AbstractFileProviderService {
     file: ProviderUploadFileDTO
   ): Promise<ProviderFileResultDTO> {
     const bucket = this.storage_.bucket(this.options_.bucketName);
-    const gcsFile = bucket.file(file.filename);
+    
+    // Generate random filename if option is enabled
+    let destinationFileName = file.filename;
+    if (this.options_.randomizeFileName) {
+      const fileExtension = file.filename.substring(file.filename.lastIndexOf('.'));
+      destinationFileName = `${randomUUID()}${fileExtension}`;
+      
+      if (this.options_.debug) {
+        this.logger_.log(`Randomized filename: ${file.filename} -> ${destinationFileName}`);
+      }
+    }
+    
+    const gcsFile = bucket.file(destinationFileName);
 
     try {
       if (this.options_.debug) {
-        this.logger_.log(`Uploading file to GCS: ${file.filename}`);
+        this.logger_.log(`Uploading file to GCS: ${destinationFileName}`);
       }
 
       // 1. Save the file
@@ -224,7 +238,7 @@ class GoogleCloudFileProviderService extends AbstractFileProviderService {
       fs.writeFileSync(tempFilePath, content);
 
       await this.storage_.bucket(this.options_.bucketName).upload(tempFilePath, {
-        destination: file.filename,
+        destination: destinationFileName,
       });
 
       let url: string;
@@ -236,14 +250,14 @@ class GoogleCloudFileProviderService extends AbstractFileProviderService {
 
       // 2b. Private file → issue a signed (presigned) URL
       } else {
-        url = await this.getPresignedDownloadUrl({ fileKey: file.filename });
+        url = await this.getPresignedDownloadUrl({ fileKey: destinationFileName });
       }
 
       if (this.options_.debug) {
         this.logger_.log(`Uploaded ${file.filename} → URL: ${url}`);
       }
 
-      return { url, key: file.filename };
+      return { url, key: destinationFileName };
 
     } catch (err) {
       this.logger_.error("Failed to upload to GCS", err);

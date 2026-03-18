@@ -94,6 +94,7 @@ npm install @igorppbr/medusa-v2-gcp-file-provider
               options: {
                 debug: true, // Show debug logs
                 bucketName: "medusatest", // The name of the bucket in Google Cloud Storage
+                randomizeFileName: false, // Set to true to randomize file names on upload to avoid conflicts (default: false)
                 serviceAccountKey: { // The service account key for Google Cloud Storage
                   "type": "service_account",
                   "project_id": "your-project-id",
