@@ -27,7 +27,8 @@ jobs:
       - name: Build package
         run: yarn run build
       
-      - name: Publish to npm
-        run: npm publish --access public --ignore-scripts
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+      - uses: JS-DevTools/npm-publish@v3
+        with:
+          token: ${{ secrets.NODE_AUTH_TOKEN }}
+          access: public
+          registry: 'https://registry.npmjs.org'
