@@ -1,41 +1,24 @@
 name: Release new package version
 
 on:
-  release:
-    types: [ created ]
+  push:
+    branches:
+      - main
 
 jobs:
-  npm_package:
-    name: Publish NPM package
+  build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
-      - uses: actions/checkout@master
-
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
-          node-version: '20.x'
-          scope: '@igorppbr'
-      
-      - name: Enable Corepack
-        run: corepack enable
-      
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
-      
-      - uses: actions/cache@v3
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      
-      - name: Install dependencies
-        run: yarn install --immutable
-      
-      - name: Build package
-        run: yarn build
-      - uses: JS-DevTools/npm-publish@v3
-        with:
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
           token: ${{ secrets.NODE_AUTH_TOKEN }}
           access: public
+      - run: yarn install --immutable
+      - run: yarn run build
+      - run: yarn publish
