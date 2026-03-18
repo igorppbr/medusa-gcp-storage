@@ -19,8 +19,22 @@ jobs:
       - name: Enable Corepack
         run: corepack enable
       
-      - run: yarn install
-      - run: yarn build
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+      
+      - uses: actions/cache@v3
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      
+      - name: Install dependencies
+        run: yarn install --immutable
+      
+      - name: Build package
+        run: yarn build
       - uses: JS-DevTools/npm-publish@v3
         with:
           token: ${{ secrets.NODE_AUTH_TOKEN }}
