@@ -1,9 +1,8 @@
 name: Release new package version
 
 on:
-  push:
-    branches:
-      - main
+  release:
+    types: [ created ]
 
 jobs:
   npm_package:
@@ -21,7 +20,7 @@ jobs:
       - name: Enable Corepack
         run: corepack enable
       
-      - name: Install dependencies
+      - name: Install dependencies (including devDependencies)
         run: yarn install
       
       - name: Build package

@@ -1,6 +1,6 @@
 {
   "name": "@igorppbr/medusa-v2-gcp-file-provider",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Google Cloud Storage integration for Medusa V2 to be used as a file provider.",
   "author": "Igor Ludgero Miura <igorlmiura@gmail.com>",
   "license": "MIT",
