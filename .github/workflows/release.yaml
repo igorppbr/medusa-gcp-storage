@@ -6,24 +6,27 @@ on:
       - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  npm_package:
     name: Publish NPM package
-    permissions:
-      contents: read
-      id-token: write
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/checkout@master
+
+      - uses: actions/setup-node@v3
         with:
-          node-version: "24"
-          registry-url: "https://registry.npmjs.org"
-          token: ${{ secrets.NODE_AUTH_TOKEN }}
-          access: public
+          node-version: '24.x'
+          scope: '@igorppbr'
+      
       - name: Enable Corepack
         run: corepack enable
-      - run: yarn install --immutable
-      - run: yarn run build
-      - run: yarn npm publish --access public
+      
+      - name: Install dependencies
+        run: yarn install
+      
+      - name: Build package
+        run: yarn run build
+      
+      - name: Publish to npm
+        run: yarn npm publish --access public
         env:
           YARN_NPM_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
