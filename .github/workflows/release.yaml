@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    name: Publish NPM package
     permissions:
       contents: read
       id-token: write
@@ -19,6 +20,8 @@ jobs:
           registry-url: "https://registry.npmjs.org"
           token: ${{ secrets.NODE_AUTH_TOKEN }}
           access: public
+      - name: Enable Corepack
+        run: corepack enable
       - run: yarn install --immutable
       - run: yarn run build
       - run: yarn publish
