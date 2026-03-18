@@ -20,16 +20,14 @@ jobs:
       - name: Enable Corepack
         run: corepack enable
       
-      - name: Configure npm registry
-        run: |
-          yarn config set npmRegistryServer "https://registry.npmjs.org"
-          yarn config set npmAlwaysAuth true
-      
       - name: Install dependencies
         run: yarn install
       
       - name: Build package
         run: yarn run build
+      
+      - name: Configure npm registry for publish
+        run: yarn config set npmRegistryServer "https://registry.npmjs.org"
       
       - name: Publish to npm
         run: yarn npm publish --access public
