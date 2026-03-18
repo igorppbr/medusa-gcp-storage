@@ -15,8 +15,12 @@ jobs:
         with:
           node-version: '20.x'
           scope: '@igorppbr'
-      - run: npm install
-      - run: npm run build
+      
+      - name: Enable Corepack
+        run: corepack enable
+      
+      - run: yarn install
+      - run: yarn build
       - uses: JS-DevTools/npm-publish@v3
         with:
           token: ${{ secrets.NODE_AUTH_TOKEN }}
